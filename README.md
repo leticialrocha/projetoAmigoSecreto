@@ -27,4 +27,5 @@ Você pode acessar o jogo online aqui:
 
 ---
 
-Feito por Leticia L. Rocha
+Feito por Leticia
+### ꒷˳ ‿ ♡
