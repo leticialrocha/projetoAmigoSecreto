@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Jogo do Amigo Secreto</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@700&family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #ffe6f0;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #a33d6d;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container__conteudo {
+            background-color: #ffd6e7;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(163, 61, 109, 0.3);
+            display: flex;
+            gap: 20px;
+            flex-direction: column;
+            width: 320px;
+        }
+
+        .container__texto h1 {
+            color: #a33d6d;
+            margin-bottom: 0.3em;
+        }
+
+        .container__texto-azul {
+            color: #ff66a3;
+        }
+
+        .texto__paragrafo {
+            font-size: 1.2em;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .container__input {
+            padding: 10px;
+            border: 2px solid #ffb3cc;
+            border-radius: 5px;
+            background-color: #fff0f5;
+            color: #a33d6d;
+            font-size: 1em;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .container__botao {
+            padding: 10px 15px;
+            background-color: #ff99bb;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-right: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .container__botao:hover {
+            background-color: #ff66a3;
+        }
+
+        .container__botoes {
+            margin-top: 10px;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        #listaAmigos {
+            margin-top: 15px;
+            padding-left: 20px;
+            color: #a33d6d;
+            list-style-type: disc;
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ffb3cc;
+            border-radius: 5px;
+            background-color: #fff0f5;
+        }
+
+        #resultado {
+            margin-top: 20px;
+            color: #a33d6d;
+            font-weight: bold;
+            min-height: 24px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="container__conteudo">
+            <div class="container__texto">
+                <h1>Jogo do <span class="container__texto-azul">Amigo Secreto</span></h1>
+                <p class="texto__paragrafo">Digite o nome do seu amigo e adicione à lista.</p>
+            </div>
+
+            <input type="text" id="amigo" class="container__input" placeholder="Nome do amigo" />
+
+            <div class="container__botoes">
+                <button onclick="adicionarAmigo()" class="container__botao">Adicionar Amigo</button>
+                <button onclick="sortearAmigo()" class="container__botao">Sortear Amigo</button>
+            </div>
+
+            <ul id="listaAmigos"></ul>
+
+            <ul id="resultado"></ul>
+        </div>
+    </div>
+
+    <script>
+        // Criar uma lista (array) para guardar os amigos
+        let listaDeAmigos = [];
+
+        function adicionarAmigo() {
+            // Capturar o input e o nome digitado
+            let input = document.querySelector('#amigo');
+            let nome = input.value.trim();
+
+            // Verificar se o campo está vazio
+            if (nome === '') {
+                alert('Por favor, insira um nome.');
+                input.focus();
+                return;
+            }
+
+            // Verificar se o nome já foi adicionado e evitar duplicados
+            if (listaDeAmigos.some(a => a.toLowerCase() === nome.toLowerCase())) {
+                alert('Este nome de amigo já foi adicionado.');
+                return;
+            }
+
+            // Adiciona o nome ao array
+            listaDeAmigos.push(nome);
+            input.value = '';
+            input.focus();
+
+            atualizarListaDeAmigos();
+            // Limpar resultado do sorteio ao adicionar novo amigo
+            document.querySelector('#resultado').innerHTML = '';
+        }
+
+        // Exibe a lista na interface 
+        function atualizarListaDeAmigos() {
+            let lista = document.querySelector('#listaAmigos');
+            lista.innerHTML = '';
+
+            listaDeAmigos.forEach(amigo => {
+                let li = document.createElement('li');
+                li.textContent = amigo;
+                lista.appendChild(li);
+            });
+        }
+
+        // Permitir adicionar pressionando Enter
+        document.addEventListener("DOMContentLoaded", () => {
+            const input = document.querySelector("#amigo");
+
+            input.addEventListener("keydown", function (event) {
+                if (event.key === "Enter") {
+                    adicionarAmigo();
+                }
+            });
+        });
+
+        function sortearAmigo() {
+            let input = document.querySelector('#amigo');
+            let resultado = document.querySelector('#resultado');
+
+            if (listaDeAmigos.length < 2) {
+                alert('Adicione pelo menos dois amigos antes de sortear.');
+                input.focus();
+                return;
+            }
+
+            let amigoSecreto = Math.floor(Math.random() * listaDeAmigos.length);
+            let sorteado = listaDeAmigos[amigoSecreto];
+
+            resultado.innerHTML = `<li>O amigo sorteado foi: <strong>${sorteado}</strong></li>`;
+            listaDeAmigos.splice(amigoSecreto, 1);
+            atualizarListaDeAmigos();
+
+            input.value = '';
+            input.focus();
+        }
+    </script>
+</body>
+
+</html>
