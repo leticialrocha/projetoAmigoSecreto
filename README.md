@@ -1,3 +1,4 @@
+# ♡‧₊ ୨ৎ
 # Jogo do Amigo Secreto
 
 Este é um projeto simples de um **Jogo do Amigo Secreto** feito em HTML, CSS e JavaScript.
@@ -26,4 +27,4 @@ Você pode acessar o jogo online aqui:
 
 ---
 
-Feito com ❤️ por Leticia L. Rocha
+Feito por Leticia L. Rocha
